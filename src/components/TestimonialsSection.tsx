@@ -14,7 +14,7 @@ const TestimonialsSection = () => (
               <p>{['Creative Director', 'Entrepreneur', 'Marketing Lead'][index]}</p>
             </div>
           </div>
-          <p>"{['The coaching is detailed, motivating, and simply unmatched. I feel stronger and more confident every week.', 'A premium fitness experience with results that feel worth every session. The focus on habit made all the difference.', 'The online coaching plan is beautiful, practical, and easy to follow. I love the premium look and the clear results.'][index]}"</p>
+          <p>"{['The coaching is detailed, motivating, and simply unmatched. I feel stronger and more confident every week.', 'A structured, no-nonsense approach — results that felt worth every session. The focus on habit made all the difference.', 'The online coaching plan is practical and easy to follow, with clear tracking and real results every week.'][index]}"</p>
           <div className="rating">★★★★★</div>
         </article>
       ))}

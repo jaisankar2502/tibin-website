@@ -29,21 +29,21 @@ const services = [
   { name: 'Weight Loss Coaching', description: 'Lean, sustainable programs designed to help you lose weight confidently.' },
   { name: 'Muscle Building', description: 'Structured hypertrophy cycles that prioritize power, posture, and tone.' },
   { name: 'Strength Training', description: 'Performance training for athletes, professionals, and busy leaders.' },
-  { name: 'Online Coaching', description: 'Elite remote coaching with daily accountability and premium support.' },
+  { name: 'Online Coaching', description: 'Remote coaching with daily accountability and direct support.' },
   { name: 'Nutrition Guidance', description: 'Simple meal strategies that complement your training and lifestyle.' },
-  { name: 'Custom Workout Plans', description: 'Precision plans tailored to your schedule, body, and growth goals.' },
+  { name: 'HYROX & Hybrid Prep', description: 'Race-specific conditioning for HYROX and hybrid competitions.' },
 ];
 
 const transformations = [
   { client: 'Maya', result: '18 lbs lost', details: '12 weeks of guided strength and nutrition.' },
   { client: 'James', result: '12 lbs gained', details: 'Focused muscle building with confident coaching.' },
-  { client: 'Ava', result: '16 lbs lost', details: 'Strong habits built over 10 weeks of premium training.' },
+  { client: 'Ava', result: '16 lbs lost', details: 'Strong habits built over 10 weeks of focused training.' },
 ];
 
 const plans = [
-  { name: 'Starter', price: '$149', description: 'Weekly coaching sessions', items: ['Weekly coaching sessions', 'Personalized training split', 'Accountability check-ins'], cta: 'Choose Starter' },
-  { name: 'Pro', price: '$249', description: 'Bi-weekly coaching sessions', items: ['Bi-weekly coaching sessions', 'Nutrition guidance', 'Progress tracking + updates'], featured: true, cta: 'Choose Pro' },
-  { name: 'Elite', price: '$349', description: 'Unlimited coaching support', items: ['Unlimited coaching support', 'Advanced training system', 'Priority scheduling'], cta: 'Choose Elite' },
+  { name: 'Starter', price: '$149', description: 'For building consistent training habits', items: ['Weekly coaching sessions', 'Personalized training split', 'Accountability check-ins'], cta: 'Choose Starter' },
+  { name: 'Pro', price: '$249', description: 'For steady, structured progress', items: ['Bi-weekly coaching sessions', 'Nutrition guidance', 'Progress tracking + updates'], featured: true, cta: 'Choose Pro' },
+  { name: 'Elite', price: '$349', description: 'For complete hands-on support', items: ['Unlimited coaching support', 'Advanced training system', 'Priority scheduling'], cta: 'Choose Elite' },
 ];
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -109,7 +109,7 @@ const App = () => {
         });
       });
 
-      document.querySelectorAll<HTMLElement>('.hero-image, .about-image').forEach((image) => {
+      document.querySelectorAll<HTMLElement>('.about-image').forEach((image) => {
         gsap.to(image, {
           backgroundPosition: '50% 32%',
           ease: 'none',
@@ -150,29 +150,53 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const animationFrames: number[] = [];
-    stats.forEach((item, index) => {
-      const duration = 900;
-      const start = performance.now();
+    const statsGrid = document.querySelector<HTMLElement>('.stats-grid');
+    if (!statsGrid) return;
 
-      const animate = (now: number) => {
-        const progress = Math.min((now - start) / duration, 1);
-        const nextValue = Math.round(item.value * progress);
-        setCountStates((current) => {
-          const next = [...current];
-          next[index] = nextValue;
-          return next;
+    let animationFrames: number[] = [];
+
+    const runCountAnimation = () => {
+      stats.forEach((item, index) => {
+        const duration = 1200;
+        const start = performance.now();
+
+        const animate = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const nextValue = Math.round(item.value * eased);
+          setCountStates((current) => {
+            const next = [...current];
+            next[index] = nextValue;
+            return next;
+          });
+
+          if (progress < 1) {
+            animationFrames[index] = requestAnimationFrame(animate);
+          }
+        };
+
+        animationFrames[index] = requestAnimationFrame(animate);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            runCountAnimation();
+            observer.disconnect();
+          }
         });
+      },
+      { threshold: 0.4 }
+    );
 
-        if (progress < 1) {
-          animationFrames[index] = requestAnimationFrame(animate);
-        }
-      };
+    observer.observe(statsGrid);
 
-      animationFrames[index] = requestAnimationFrame(animate);
-    });
-
-    return () => animationFrames.forEach((id) => cancelAnimationFrame(id));
+    return () => {
+      observer.disconnect();
+      animationFrames.forEach((id) => cancelAnimationFrame(id));
+    };
   }, []);
 
   const bmi = useMemo(() => {

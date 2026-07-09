@@ -5,7 +5,7 @@ const AboutSection = () => (
       <div className="about-copy reveal">
         <span className="eyebrow">Meet Your Coach</span>
         <h2>Strategic coaching for lasting confidence and strength.</h2>
-        <p>With a focus on mindset, movement, and nutrition, I deliver a sustainable fitness journey that feels premium, effective, and motivating.</p>
+        <p>A hybrid approach to mindset, movement, and nutrition — built to be sustainable, effective, and genuinely motivating.</p>
         <div className="about-highlights">
           <div>
             <strong>Certifications</strong>
@@ -23,7 +23,7 @@ const AboutSection = () => (
         <ul className="feature-list">
           <li>Tailored weight loss cycles</li>
           <li>High-performance muscle plans</li>
-          <li>Online coaching for ambitious clients</li>
+          <li>HYROX & hybrid race prep</li>
         </ul>
       </div>
     </div>

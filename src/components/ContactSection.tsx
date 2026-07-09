@@ -4,15 +4,15 @@ const ContactSection = () => (
       <div className="contact-copy">
         <span className="eyebrow">Contact</span>
         <h2>Book your consultation today.</h2>
-        <p>Complete the form and we’ll reach out to customize your premium fitness plan.</p>
+        <p>Complete the form and we’ll reach out with a plan built around your goals.</p>
         <div className="contact-info">
-          <p><strong>Email:</strong> hello@elevatefitness.com</p>
+          <p><strong>Email:</strong> hello@tibinfitness.com</p>
           <p><strong>Phone:</strong> +1 (555) 019-2347</p>
         </div>
         <div className="social-links">
-          <a href="#">Instagram</a>
+          <a href="https://www.instagram.com/the_athletic_twin" target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href="#">LinkedIn</a>
-          <a href="#">YouTube</a>
+          <a href="https://www.youtube.com/@the_athletic_twin" target="_blank" rel="noopener noreferrer">YouTube</a>
         </div>
       </div>
       <form className="contact-form card">

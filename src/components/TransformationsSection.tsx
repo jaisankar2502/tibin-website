@@ -12,7 +12,7 @@ const TransformationsSection = ({ transformations }: TransformationsSectionProps
   <section className="section transformations-section" id="transformations">
     <div className="container section-header reveal">
       <span className="eyebrow">Transformations</span>
-      <h2>Real results from real clients.</h2>
+      <h2>Proof in the progress.</h2>
     </div>
     <div className="container transformation-slider reveal">
       {transformations.map((item) => (

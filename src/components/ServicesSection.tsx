@@ -11,7 +11,7 @@ const ServicesSection = ({ services }: ServicesSectionProps) => (
   <section className="section services-section" id="programs">
     <div className="container section-header reveal">
       <span className="eyebrow">Services</span>
-      <h2>Premium fitness experiences for every goal.</h2>
+      <h2>Training built around your goal.</h2>
     </div>
     <div className="container services-grid">
       {services.map((service) => (

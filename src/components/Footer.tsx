@@ -2,8 +2,8 @@ const Footer = () => (
   <footer className="footer section">
     <div className="container footer-grid">
       <div>
-        <a href="#home" className="footer-logo">ELEVATE</a>
-        <p>High-end coaching for ambitious clients seeking real change.</p>
+        <a href="#home" className="footer-logo">TIBIN</a>
+        <p>Hybrid coaching, HIIT training, and HYROX prep — built around real results.</p>
       </div>
       <div className="footer-links">
         <a href="#programs">Programs</a>
@@ -13,12 +13,12 @@ const Footer = () => (
       </div>
       <div>
         <p><strong>Contact</strong></p>
-        <p>hello@elevatefitness.com</p>
+        <p>hello@tibinfitness.com</p>
         <p>+1 (555) 019-2347</p>
       </div>
     </div>
     <div className="container copyright">
-      <p>© 2026 Elevate Fitness. All rights reserved.</p>
+      <p>© 2026 Tibin Ambrose. All rights reserved.</p>
     </div>
   </footer>
 );

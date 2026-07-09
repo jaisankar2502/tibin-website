@@ -6,7 +6,7 @@ type HeaderProps = {
 const Header = ({ menuOpen, setMenuOpen }: HeaderProps) => (
   <header className="navbar">
     <div className="container nav-inner">
-      <a href="#home" className="logo">ELEVATE</a>
+      <a href="#home" className="logo">TIBIN</a>
       <nav className={`nav-links${menuOpen ? ' open' : ''}`}>
         <a href="#home">Home</a>
         <a href="#programs">Programs</a>

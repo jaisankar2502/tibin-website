@@ -7,7 +7,7 @@ const StatsSection = ({ stats, countStates }: StatsSectionProps) => (
   <section className="section stats-section" aria-label="Statistics">
     <div className="container section-header reveal">
       <span className="eyebrow">Performance</span>
-      <h2>Results that reflect premium coaching and sustainable growth.</h2>
+      <h2>Results that speak for themselves.</h2>
     </div>
     <div className="container stats-grid">
       {stats.map((item, index) => (
