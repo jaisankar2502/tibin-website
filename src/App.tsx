@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import AboutSection from './components/AboutSection';
 import BmiSection from './components/BmiSection';
 import BlogSection from './components/BlogSection';
@@ -43,6 +46,8 @@ const plans = [
   { name: 'Elite', price: '$349', description: 'Unlimited coaching support', items: ['Unlimited coaching support', 'Advanced training system', 'Priority scheduling'], cta: 'Choose Elite' },
 ];
 
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
 const posts = [
   { category: 'Fitness', title: 'The smarter way to build strength without burnout.' },
   { category: 'Workout', title: 'Minimalist training splits for busy schedules.' },
@@ -72,15 +77,55 @@ const App = () => {
       smoothWheel: true,
     });
 
-    let frameId: number;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      frameId = requestAnimationFrame(raf);
-    };
-    frameId = requestAnimationFrame(raf);
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const tick = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
+
+    const ctx = gsap.context(() => {
+      const heroSplit = SplitText.create('.hero-copy h1', { type: 'lines', mask: 'lines' });
+      gsap.from(heroSplit.lines, {
+        yPercent: 110,
+        opacity: 0,
+        duration: 1,
+        ease: 'expo.out',
+        stagger: 0.08,
+        delay: 0.15,
+      });
+
+      document.querySelectorAll<HTMLElement>('.section-header h2').forEach((heading) => {
+        const split = SplitText.create(heading, { type: 'lines', mask: 'lines' });
+        gsap.from(split.lines, {
+          yPercent: 110,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'expo.out',
+          stagger: 0.06,
+          scrollTrigger: {
+            trigger: heading,
+            start: 'top 85%',
+          },
+        });
+      });
+
+      document.querySelectorAll<HTMLElement>('.hero-image, .about-image').forEach((image) => {
+        gsap.to(image, {
+          backgroundPosition: '50% 32%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: image,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      });
+    });
 
     return () => {
-      cancelAnimationFrame(frameId);
+      ctx.revert();
+      gsap.ticker.remove(tick);
       lenis.destroy();
     };
   }, []);
