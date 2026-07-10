@@ -33,10 +33,6 @@ const HeroSection = () => (
 
       <div className="hero-bar">
         <div className="container hero-bar-inner">
-          <div className="hero-bar-tag">
-            <span className="hero-bar-label">Hybrid Coach</span>
-            <strong>Tibin Ambrose</strong>
-          </div>
           <div className="hero-actions">
             <a href="#contact" className="button button-primary">Start Training</a>
             <a href="#programs" className="button button-secondary">View Programs</a>

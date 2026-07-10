@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import AboutSection from './components/AboutSection';
-import BmiSection from './components/BmiSection';
+import BmiSection, { type BmiResult } from './components/BmiSection';
 import BlogSection from './components/BlogSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
@@ -68,7 +68,7 @@ const App = () => {
   const [countStates, setCountStates] = useState(() => stats.map(() => 0));
   const [height, setHeight] = useState('180');
   const [weight, setWeight] = useState('75');
-  const [bmiResult, setBmiResult] = useState('Your BMI will appear here.');
+  const [bmiResult, setBmiResult] = useState<BmiResult>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -218,20 +218,18 @@ const App = () => {
     };
   }, []);
 
-  const bmi = useMemo(() => {
-    const h = Number(height);
-    const w = Number(weight);
-    if (!h || !w) return 'Enter both height and weight to calculate.';
-    const value = (w / ((h / 100) ** 2)).toFixed(1);
-    if (Number(value) < 18.5) return `BMI ${value} — Underweight`;
-    if (Number(value) < 25) return `BMI ${value} — Normal`;
-    if (Number(value) < 30) return `BMI ${value} — Overweight`;
-    return `BMI ${value} — Strong focus required`;
-  }, [height, weight]);
-
   const handleCalculate = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setBmiResult(bmi);
+    const h = Number(height);
+    const w = Number(weight);
+    if (!h || !w) {
+      setBmiResult(null);
+      return;
+    }
+    const value = Number((w / ((h / 100) ** 2)).toFixed(1));
+    const category =
+      value < 18.5 ? 'Underweight' : value < 25 ? 'Normal' : value < 30 ? 'Overweight' : 'Obese';
+    setBmiResult({ value, category });
   };
 
   return (
