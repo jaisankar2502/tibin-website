@@ -57,6 +57,72 @@ img {
   min-height: 100vh;
 }
 
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  background: var(--background);
+  overflow: hidden;
+}
+
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.loader-mark {
+  letter-spacing: 0.34em;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.loader-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.loader-line {
+  display: block;
+  opacity: 0;
+  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.loader-lead {
+  color: var(--accent);
+}
+
+.loader-bar {
+  width: min(220px, 60vw);
+  height: 2px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
 .container {
   width: min(1200px, calc(100% - 32px));
   margin: 0 auto;

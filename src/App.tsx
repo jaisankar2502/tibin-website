@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import InstagramSection from './components/InstagramSection';
+import Loader from './components/Loader';
 import NutritionSection from './components/NutritionSection';
 import PricingSection from './components/PricingSection';
 import ServicesSection from './components/ServicesSection';
@@ -63,6 +64,7 @@ const meals = [
 const App = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [navVisible, setNavVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [countStates, setCountStates] = useState(() => stats.map(() => 0));
   const [height, setHeight] = useState('180');
   const [weight, setWeight] = useState('75');
@@ -130,6 +132,15 @@ const App = () => {
       lenis.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = loading ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [loading]);
+
+  const handleLoaderComplete = useCallback(() => setLoading(false), []);
 
   useEffect(() => {
     const handleScroll = () => setNavVisible(window.scrollY > 40);
@@ -225,6 +236,7 @@ const App = () => {
 
   return (
     <div className="page-shell">
+      {loading && <Loader onComplete={handleLoaderComplete} />}
       <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} visible={navVisible} />
 
       <main>
