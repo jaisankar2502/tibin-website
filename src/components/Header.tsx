@@ -1,10 +1,11 @@
 type HeaderProps = {
   menuOpen: boolean;
   setMenuOpen: (value: boolean | ((value: boolean) => boolean)) => void;
+  visible: boolean;
 };
 
-const Header = ({ menuOpen, setMenuOpen }: HeaderProps) => (
-  <header className="navbar">
+const Header = ({ menuOpen, setMenuOpen, visible }: HeaderProps) => (
+  <header className={`navbar${visible ? ' navbar-visible' : ''}`}>
     <div className="container nav-inner">
       <a href="#home" className="logo">TIBIN</a>
       <nav className={`nav-links${menuOpen ? ' open' : ''}`}>

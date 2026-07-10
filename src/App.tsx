@@ -62,6 +62,7 @@ const meals = [
 
 const App = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navVisible, setNavVisible] = useState(false);
   const [countStates, setCountStates] = useState(() => stats.map(() => 0));
   const [height, setHeight] = useState('180');
   const [weight, setWeight] = useState('75');
@@ -128,6 +129,13 @@ const App = () => {
       gsap.ticker.remove(tick);
       lenis.destroy();
     };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setNavVisible(window.scrollY > 40);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -217,11 +225,11 @@ const App = () => {
 
   return (
     <div className="page-shell">
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} visible={navVisible} />
 
       <main>
-        <InstagramSection />
         <HeroSection />
+        <InstagramSection />
         <StatsSection stats={stats} countStates={countStates} />
         <AboutSection />
         <ServicesSection services={services} />
